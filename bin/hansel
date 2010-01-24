@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'optparse'
+require 'ostruct'
+
+class File
+  def self.here(string)
+    expand_path(dirname(__FILE__)) + string
+  end
+end
+
+require File.here '/../lib/arg_parser'
+require File.here '/../lib/mutter'
+require File.here '/../lib/config'
+require File.here '/../lib/hansel'
+
+include Config
+include Mutter
+
+hansel = Hansel.new(options)
+puts hansel.run
