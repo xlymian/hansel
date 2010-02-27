@@ -51,7 +51,8 @@ class Hansel
   def output
     if options.output
       FileUtils.mkdir_p options.output_dir
-      output_file = File.join options.output_dir, [options.server, options.num_conns.to_s].join('.')
+      output_file_name = [options.server, options.num_conns.to_s].join('.')
+      output_file = File.join options.output_dir, output_file_name
       type = { :yaml => 'yml', :csv => 'csv', :octave => 'm' }[options.output_format]
       File.open([output_file, type].join('.'), "w+") do |f|
         formatter = case options.output_format
@@ -63,7 +64,7 @@ class Hansel
             CsvFormatter.new(@results)
           when :octave
             load File.here '/../lib/octave_formatter.rb'
-            OctaveFormatter.new(@results, {:output_file => output_file})
+            OctaveFormatter.new(@results, {:output_file_name => output_file_name})
         end
         f.puts formatter.format
       end

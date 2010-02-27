@@ -2,7 +2,7 @@ class OctaveFormatter
   def initialize(data, options = {})
     @data = data
     @options = options
-    @png_output = [(options[:output_file] || 'stats'), 'png'].join('.')
+    @png_output = [(options[:output_file_name] || 'stats'), 'png'].join('.')
   end
 
   def format
