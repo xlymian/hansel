@@ -1,6 +1,8 @@
 class OctaveFormatter
-  def initialize(data)
+  def initialize(data, options = {})
     @data = data
+    @options = options
+    @png_output = [(options[:output_file] || 'stats'), 'png'].join('.')
   end
 
   def format
@@ -39,7 +41,7 @@ class OctaveFormatter
       title('Hansel report for #{@data[:server]}:#{@data[:port]}#{@data[:uri]} (#{@data[:num_conns]} connections per run)')
       xlabel('Demanded Request Rate');
       legend('Request Rate', 'Connection Rate', 'Avg. reply rate', 'Max. reply rate', 'Reply rate StdDev', 'Errors');
-      print('stats.png', '-dpng')
+      print('#{@png_output}', '-dpng')
     EOS
     result = result.gsub '  ', ''
     result

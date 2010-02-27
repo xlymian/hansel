@@ -1,23 +1,29 @@
+require 'fileutils'
+
 class Hansel
   def initialize(options = {})
     @options = options
     @results = {}
   end
 
+  def options
+    @options
+  end
+
   def verbose?
-    @options.verbose
+    options.verbose
   end
 
   def benchmark(rate)
     result = {:output => ""}
     httperf_cmd = [
       "httperf --hog",
-      "--server=#{@options.server}",
-      "--port=#{@options.port}",
-      "--uri=#{@options.uri}",
-      "--num-conns=#{@options.num_conns}",
+      "--server=#{options.server}",
+      "--port=#{options.port}",
+      "--uri=#{options.uri}",
+      "--num-conns=#{options.num_conns}",
       "--rate=#{rate}",
-      @options.cookie && "--add-header='Cookie: #{@options.cookie}\\n'"
+      options.cookie && "--add-header='Cookie: #{options.cookie}\\n'"
     ].compact.join ' '
 
     IO.popen("#{httperf_cmd} 2>&1") do |pipe|
@@ -43,9 +49,12 @@ class Hansel
   end
 
   def output
-    if @options.output
-      File.open(@options.output, "w+") do |f|
-        formatter = case @options.output_format
+    if options.output
+      FileUtils.mkdir_p options.output_dir
+      output_file = File.join options.output_dir, [options.server, options.num_conns.to_s].join('.')
+      type = { :yaml => 'yml', :csv => 'csv', :octave => 'm' }[options.output_format]
+      File.open([output_file, type].join('.'), "w+") do |f|
+        formatter = case options.output_format
           when :yaml
             load File.here '/../lib/yaml_formatter.rb'
             YamlFormatter.new(@results)
@@ -54,7 +63,7 @@ class Hansel
             CsvFormatter.new(@results)
           when :octave
             load File.here '/../lib/octave_formatter.rb'
-            OctaveFormatter.new(@results)
+            OctaveFormatter.new(@results, {:output_file => output_file})
         end
         f.puts formatter.format
       end
@@ -63,12 +72,12 @@ class Hansel
 
   def run
     puts "starting run..." if verbose?
-    (@options.low_rate..@options.high_rate).step(@options.rate_step) do |rate|
+    (options.low_rate..options.high_rate).step(options.rate_step) do |rate|
       puts "benchmarking at rate: #{rate}" if verbose?
-      @results[:server]     = @options.server
-      @results[:port]       = @options.port
-      @results[:uri]        = @options.uri
-      @results[:num_conns]  = @options.num_conns
+      @results[:server]     = options.server
+      @results[:port]       = options.port
+      @results[:uri]        = options.uri
+      @results[:num_conns]  = options.num_conns
       @results[rate]        = benchmark(rate)
     end
     puts "ending run..." if verbose?

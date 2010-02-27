@@ -17,6 +17,7 @@ class ArgParser
     options.rate_step     = 1
     options.output_format = :yaml
     options.output        = nil
+    options.output_dir    = File.join ENV['HOME'], 'hansel_output'
 
     opts = OptionParser.new do |opts|
       opts.banner = "Usage: hansel [options]"
@@ -70,6 +71,10 @@ class ArgParser
 
       opts.on("-o", "--output=FILE", "Specify an output file.") do |opt|
         options.output = opt
+      end
+
+      opts.on("-d", "--output_dir=PATH", "Specify an output directory.") do |opt|
+        options.output_dir = opt
       end
 
       opts.separator ""
