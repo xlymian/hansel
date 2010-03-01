@@ -18,11 +18,11 @@ class ArgParser
     options.output_format = :yaml
     options.output        = nil
     options.output_dir    = File.join ENV['HOME'], 'hansel_output'
+    options.exit          = false
 
     opts = OptionParser.new do |opts|
       opts.banner = "Usage: hansel [options]"
 
-      opts.separator ""
       opts.separator "Specific options:"
 
       # Mandatory argument.
@@ -77,25 +77,21 @@ class ArgParser
         options.output_dir = opt
       end
 
-      opts.separator ""
       opts.separator "Common options:"
 
       # Boolean switch.
-      opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-        options.verbose = v
+      opts.on("-v", "--[no-]verbose", "Run verbosely") do |opt|
+        options.verbose = opt
       end
 
-      # No argument, shows at tail.  This will print an options summary.
-      # Try it and see!
       opts.on_tail("-h", "--help", "Show this message") do
         puts opts
-        exit
+        options.exit = true
       end
 
-      # Another typical switch to print the version.
       opts.on_tail("--version", "Show version") do
-        puts OptionParser::Version.join('.')
-        exit
+        puts "Hansel version #{IO.foreach('VERSION').first.strip}"
+        options.exit = true
       end
     end
 

@@ -19,4 +19,5 @@ include Config
 include Mutter
 
 hansel = Hansel.new(options)
-puts hansel.run
+exit if options.exit
+hansel.run
