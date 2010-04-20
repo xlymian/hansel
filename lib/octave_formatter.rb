@@ -35,14 +35,16 @@ class OctaveFormatter
       hold on;
       plot(rate, reply_rate_stddev, '-kh');
       hold on;
-      plot(rate, errors, '-r<');
+      plot(rate, reply_time, '-g*');
+      hold on;
+      plot(rate, errors, '-r*');
 
       grid on;
 
       axis([0 #{rate.last} 0 #{rate.last}]);
       title('Hansel report for #{@data[:server]}:#{@data[:port]}#{@data[:uri]} (#{@data[:num_conns]} connections per run)')
       xlabel('Demanded Request Rate');
-      legend('Request Rate', 'Connection Rate', 'Avg. reply rate', 'Max. reply rate', 'Reply rate StdDev', 'Errors');
+      legend('Request Rate', 'Connection Rate', 'Avg. reply rate', 'Max. reply rate', 'Reply rate StdDev', 'Reply time', 'Errors');
       print('#{@png_output}', '-dpng')
     EOS
     result = result.gsub '  ', ''
