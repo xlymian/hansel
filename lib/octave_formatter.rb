@@ -11,6 +11,7 @@ class OctaveFormatter
     connection_rate   = rate.collect{|x| @data[x][:connection_rate]}
     reply_rate_avg    = rate.collect{|x| @data[x][:reply_rate_avg]}
     reply_rate_max    = rate.collect{|x| @data[x][:reply_rate_max]}
+    reply_time        = rate.collect{|x| @data[x][:reply_time]}
     reply_rate_stddev = rate.collect{|x| @data[x][:reply_rate_stddev]}
     errors            = rate.collect{|x| @data[x][:errors]}
 
@@ -20,6 +21,7 @@ class OctaveFormatter
       connection_rate   = [#{connection_rate.join(',')}];
       reply_rate_avg    = [#{reply_rate_avg.join(',')}];
       reply_rate_max    = [#{reply_rate_max.join(',')}];
+      reply_time        = [#{reply_time.join(',')}];
       reply_rate_stddev = [#{reply_rate_stddev.join(',')}];
       errors            = [#{errors.join(',')}];
 
