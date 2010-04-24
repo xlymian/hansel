@@ -1,20 +1,41 @@
 require 'csv'
-
-class CsvFormatter
-  def initialize(data)
-    @data = data
-  end
-
-  def format
-    result = ""
-    return result if @data.empty?
-    keys = @data[@data.keys.first].keys
-    result << CSV.generate_line(keys.map(&:to_s))
-    result << "\n"
-    @data.each_pair do |key, value|
-      result << CSV.generate_line(keys.collect{|k| value[k]})
-      result << "\n"
+module Hansel
+  #
+  # Output to csv format
+  #
+  class CsvFormatter
+    def initialize(data)
+      return if data.empty?
+      @data = data
+      @csv = ""
+      @info_keys = []
+      @data_keys = []
+      @data.keys.each do |key|
+        @info_keys << key if key.instance_of? Symbol
+        @data_keys << key if key.instance_of? Fixnum
+      end
+      @keys ||= @data[@data_keys.first].keys
+      @info = @info_keys.collect{|key| @data[key]}
+      line header
     end
-    result
+
+    def line text
+      @csv << text
+      @csv << "\n"
+    end
+
+    def header
+      @header ||= CSV.generate_line((@info_keys + @keys).map(&:to_s))
+    end
+
+    def format_line data_key
+      line CSV.generate_line(@info + @keys.collect{|key| @data[data_key][key]})
+    end
+
+    def format
+      return result if @data.empty?
+      @data_keys.each { |data_key| format_line data_key }
+      @csv
+    end
   end
 end
