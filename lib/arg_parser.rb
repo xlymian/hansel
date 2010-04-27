@@ -28,86 +28,70 @@ module Hansel
       )
     end
 
-    def server options
+    def server_options options
       options.on("-s", "--server=S",
-              "Specifies the IP hostname of the server.") do |opt|
-        @options.server = opt
+          "Specifies the IP hostname of the server.") do |server|
+        @options.server = server
       end
-    end
 
-    def port options
       options.on("-p", "--port=N",
-        "This option specifies the port number N on which the web server is listening for HTTP requests.") do |opt|
-        @options.port = opt
+          "Specifies the port number on which the server is listening.") do |port|
+        @options.port = port
       end
-    end
 
-    def uri options
       options.on("-u", "--uri=S",
-              "Specifies that URI S should be accessed on the server.") do |opt|
-        @options.uri = opt
+          "Specifies that URI S should be accessed on the server.") do |uri|
+        @options.uri = uri
       end
     end
 
-    def connections options
+    def httperf_options options
       options.on("-n", "--num_conns=N",
-              "Specifies the total number of connections to create.") do |opt|
-        @options.num_conns = opt
+          "Specifies the total number of connections to create.") do |num_conns|
+        @options.num_conns = num_conns
       end
-    end
 
-    def low_rate options
       options.on("-l", "--low_rate=S",
-              "Specifies the starting fixed rate at which connections are created.") do |opt|
-        @options.low_rate = opt
+          "Specifies the starting fixed rate at which connections are created.") do |low_rate|
+        @options.low_rate = low_rate
       end
-    end
 
-    def high_rate options
       options.on("-l", "--high_rate=S",
-              "Specifies the ending fixed rate at which connections are created.") do |opt|
-        @options.high_rate = opt
+          "Specifies the ending fixed rate at which connections are created.") do |high_rate|
+        @options.high_rate = high_rate
       end
-    end
 
-    def rate_step options
       options.on("-l", "--rate_step=S",
-              "Specifies the fixed rate step at which connections are created.") do |opt|
-        @options.rate_step = opt
+          "Specifies the fixed rate step at which connections are created.") do |rate_step|
+        @options.rate_step = rate_step
       end
     end
 
-    def cookie options
-      options.on("-c", "--cookie=C", "Specify a cookie.") do |opt|
-        @options.cookie = opt
+    def output_options options
+      options.on("-f", "--format=FORMAT [yaml|csv|octave]",
+          "Specify an output format.") do |format|
+        @options.output_format = format.to_sym
+      end
+
+      options.on("-o", "--output=FILE", "Specify an output file.") do |output|
+        @options.output = output
+      end
+
+      options.on("-d", "--output_dir=PATH",
+          "Specify an output directory.") do |output_dir|
+        @options.output_dir = output_dir
       end
     end
 
-    def format options
-      options.on("-f", "--format=FILE [yaml|csv]", "Specify an output format.") do |opt|
-        @options.output_format = opt.to_sym
+    def other_options options
+      options.on("-c", "--cookie=C", "Specify a cookie.") do |cookie|
+        @options.cookie = cookie
       end
-    end
 
-    def output options
-      options.on("-o", "--output=FILE", "Specify an output file.") do |opt|
-        @options.output = opt
+      options.on("-v", "--[no-]verbose", "Run verbosely") do |verbose|
+        @options.verbose = verbose
       end
-    end
 
-    def output_dir options
-      options.on("-d", "--output_dir=PATH", "Specify an output directory.") do |opt|
-        @options.output_dir = opt
-      end
-    end
-
-    def verbose options
-      options.on("-v", "--[no-]verbose", "Run verbosely") do |opt|
-        @options.verbose = opt
-      end
-    end
-
-    def help options
       options.on_tail("-h", "--help", "Show this message") do
         puts options
         @options.exit = true
@@ -124,8 +108,8 @@ module Hansel
     def parse_options options
       options.banner = "Usage: hansel [options]"
       options.separator "Options:"
-      %w(server port uri connections low_rate high_rate rate_step cookie
-        format output output_dir verbose help version).map(&:to_sym).each do |method|
+      %w(server_options httperf_options output_options
+          other_options version).map(&:to_sym).each do |method|
           self.send method, options
       end
     end
