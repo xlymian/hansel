@@ -61,7 +61,7 @@ module Hansel
 
     def parse pipe
       @result = {:output => ""}
-      while line = pipe.gets
+      pipe.each_line do |line|
         parse_line line
       end
     end
@@ -105,17 +105,22 @@ module Hansel
     def octave_formatter
       load File.here '/../lib/octave_formatter.rb'
       puts @output_file_name
-      OctaveFormatter.new(@results, {:output_file_name => @output_file_name})
+      OctaveFormatter.new(@results, {
+          :output_file_name => @output_file_name,
+          :template         => File.join([@options.template_path,
+                                      @options.template || 'octave.m.erb']),
+        }
+      )
     end
 
     def make_formatter format
-      case format
-        when :yaml
-          yaml_formatter
-        when :csv
-          csv_formatter
-        when :octave
-          octave_formatter
+      formatter = "#{format}_formatter".to_sym
+      unless self.respond_to? formatter
+        puts "Using default octave_formatter"
+        octave_formatter
+      else
+        puts "Using #{formatter}"
+        self.send formatter
       end
     end
 

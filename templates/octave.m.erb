@@ -1,0 +1,30 @@
+rate              = [<%= @rates %>];
+request_rate      = [<%= @request_rate %>];
+connection_rate   = [<%= @connection_rate %>];
+reply_rate_avg    = [<%= @reply_rate_avg %>];
+reply_rate_max    = [<%= @reply_rate_max %>];
+reply_time        = [<%= @reply_time %>];
+reply_rate_stddev = [<%= @reply_rate_stddev %>];
+errors            = [<%= @errors %>];
+
+plot(rate, request_rate, '-k*');
+hold on;
+plot(rate, connection_rate, '-kd');
+hold on;
+plot(rate, reply_rate_max, '-kp');
+hold on;
+plot(rate, reply_rate_max, '-k+');
+hold on;
+plot(rate, reply_rate_stddev, '-kh');
+hold on;
+plot(rate, reply_time, '-g*');
+hold on;
+plot(rate, errors, '-r*');
+
+grid on;
+
+axis([0 <%= @max_rate %> 0 <%= @max_rate %>]);
+title('Hansel report for <%= "#{@data[:server]}:#{@data[:port]}#{@data[:uri]} (#{@data[:num_conns]}" %> connections per run)')
+xlabel('Demanded Request Rate');
+legend('Request Rate', 'Connection Rate', 'Avg. reply rate', 'Max. reply rate', 'Reply rate StdDev', 'Reply time', 'Errors');
+print('<%= @png_output %>', '-dpng')

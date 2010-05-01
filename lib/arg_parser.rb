@@ -11,20 +11,22 @@ module Hansel
     def initialize args
       @args     = args
       @options  = OpenStruct.new(
-        :verbose       => false,
-        :server        => 'localhost',
-        :port          => '80',
-        :uri           => '/',
-        :num_conns     => 1,
-        :rate          => 1,
-        :cookie        => nil,
-        :low_rate      => 1,
-        :high_rate     => 2,
-        :rate_step     => 1,
-        :output_format => :yaml,
-        :output        => nil,
-        :output_dir    => File.join(ENV['HOME'], 'hansel_output'),
-        :exit          => false
+        :verbose        => false,
+        :server         => 'localhost',
+        :port           => '80',
+        :uri            => '/',
+        :num_conns      => 1,
+        :rate           => 1,
+        :cookie         => nil,
+        :low_rate       => 1,
+        :high_rate      => 2,
+        :rate_step      => 1,
+        :output_format  => :yaml,
+        :output         => nil,
+        :output_dir     => File.join(ENV['HOME'], 'hansel_output'),
+        :template_path  => 'templates',
+        :template       => nil,
+        :exit           => false
       )
     end
 
@@ -80,6 +82,17 @@ module Hansel
       options.on("-d", "--output_dir=PATH",
           "Specify an output directory.") do |output_dir|
         @options.output_dir = output_dir
+      end
+    end
+
+    def template_options options
+      options.on("-m", "--template_path=PATH", "Specify template path.") do |template_path|
+        @options.template_path = template_path
+      end
+
+      options.on("-t", "--template=TEMPLATE_NAME",
+          "Specify a template for output.") do |template|
+        @options.template = template
       end
     end
 
