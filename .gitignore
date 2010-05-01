@@ -1,6 +1,9 @@
 ## MAC OS
 .DS_Store
 
+## metric_fu
+tmp/*
+
 ## TEXTMATE
 *.tmproj
 tmtags
