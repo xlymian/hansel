@@ -1,5 +1,13 @@
 require 'rubygems'
 require 'rake'
+require "spec/rake/spectask"
+
+task :default => :spec
+
+Spec::Rake::SpecTask.new do |t|
+  t.spec_opts = %w(-fs -c)
+  t.spec_files = FileList["spec/**_spec.rb"]
+end
 
 begin
   require 'metric_fu'

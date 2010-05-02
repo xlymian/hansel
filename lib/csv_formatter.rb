@@ -1,22 +1,17 @@
 require 'csv'
+
 module Hansel
-  #
+
   # Output to csv format
   #
   class CsvFormatter
+    COLUMNS = %w(rate replies connection_rate request_rate reply_time net_io
+                  errors status reply_rate_min reply_rate_avg reply_rate_max
+                  reply_rate_stddev)
+
     def initialize(data)
-      return if data.empty?
       @data = data
       @csv = ""
-      @info_keys = []
-      @data_keys = []
-      @data.keys.each do |key|
-        @info_keys << key if key.instance_of? Symbol
-        @data_keys << key if key.instance_of? Fixnum
-      end
-      @keys ||= @data[@data_keys.first].keys
-      @info = @info_keys.collect{|key| @data[key]}
-      line header
     end
 
     def line text
@@ -24,17 +19,13 @@ module Hansel
       @csv << "\n"
     end
 
-    def header
-      @header ||= CSV.generate_line((@info_keys + @keys).map(&:to_s))
-    end
-
-    def format_line data_key
-      line CSV.generate_line(@info + @keys.collect{|key| @data[data_key][key]})
+    def format_line data
+      line CSV.generate_line( COLUMNS.map { |column| data.send column.to_sym } )
     end
 
     def format
-      return result if @data.empty?
-      @data_keys.each { |data_key| format_line data_key }
+      line CSV.generate_line(COLUMNS)
+      @data.each { |data| format_line data } unless @data.empty?
       @csv
     end
   end

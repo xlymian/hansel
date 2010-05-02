@@ -1,11 +1,11 @@
-rate              = [<%= @rates %>];
-request_rate      = [<%= @request_rate %>];
-connection_rate   = [<%= @connection_rate %>];
-reply_rate_avg    = [<%= @reply_rate_avg %>];
-reply_rate_max    = [<%= @reply_rate_max %>];
-reply_time        = [<%= @reply_time %>];
-reply_rate_stddev = [<%= @reply_rate_stddev %>];
-errors            = [<%= @errors %>];
+rate              = [<%= @data.map(&:rate).join(', ') %>];
+request_rate      = [<%= @data.map(&:request_rate).join(', ') %>];
+connection_rate   = [<%= @data.map(&:connection_rate).join(', ') %>];
+reply_rate_avg    = [<%= @data.map(&:reply_rate_avg).join(', ') %>];
+reply_rate_max    = [<%= @data.map(&:reply_rate_max).join(', ') %>];
+reply_time        = [<%= @data.map(&:reply_time).join(', ') %>];
+reply_rate_stddev = [<%= @data.map(&:reply_rate_stddev).join(', ') %>];
+errors            = [<%= @data.map(&:errors).join(', ') %>];
 
 plot(rate, request_rate, '-k*');
 hold on;
@@ -24,7 +24,7 @@ plot(rate, errors, '-r*');
 grid on;
 
 axis([0 <%= @max_rate %> 0 <%= @max_rate %>]);
-title('Hansel report for <%= "#{@data[:server]}:#{@data[:port]}#{@data[:uri]} (#{@data[:num_conns]}" %> connections per run)')
+title('Hansel report for <%= "#{@data.first.server}:#{@data.first.port}#{@data.first.uri} (#{@data.first.num_conns}" %> connections per run)')
 xlabel('Demanded Request Rate');
 legend('Request Rate', 'Connection Rate', 'Avg. reply rate', 'Max. reply rate', 'Reply rate StdDev', 'Reply time', 'Errors');
 print('<%= @png_output %>', '-dpng')
