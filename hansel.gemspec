@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{hansel}
-  s.version = "0.1.5"
+  s.version = "0.1.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Mylchreest"]
-  s.date = %q{2010-04-27}
+  s.date = %q{2010-05-05}
   s.default_executable = %q{hansel}
   s.description = %q{Ruby driver for httperf - automated load and performance testing}
   s.email = %q{paul.mylchreest@mac.com}
@@ -31,14 +31,23 @@ Gem::Specification.new do |s|
      "lib/config.rb",
      "lib/csv_formatter.rb",
      "lib/hansel.rb",
+     "lib/httperf_result.rb",
+     "lib/httperf_result_parser.rb",
      "lib/octave_formatter.rb",
-     "lib/yaml_formatter.rb"
+     "lib/yaml_formatter.rb",
+     "spec/httperf_result_parser_spec.rb",
+     "spec/spec_helper.rb",
+     "templates/octave.m.erb"
   ]
   s.homepage = %q{http://github.com/xlymian/hansel}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Ruby driver for httperf - automated load and performance testing}
+  s.test_files = [
+    "spec/httperf_result_parser_spec.rb",
+     "spec/spec_helper.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
