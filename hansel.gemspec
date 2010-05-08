@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{hansel}
-  s.version = "0.1.6"
+  s.version = "0.1.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Mylchreest"]
-  s.date = %q{2010-05-05}
+  s.date = %q{2010-05-08}
   s.default_executable = %q{hansel}
   s.description = %q{Ruby driver for httperf - automated load and performance testing}
   s.email = %q{paul.mylchreest@mac.com}
@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
      "lib/httperf_result_parser.rb",
      "lib/octave_formatter.rb",
      "lib/yaml_formatter.rb",
+     "spec/arg_parser_spec.rb",
      "spec/httperf_result_parser_spec.rb",
      "spec/spec_helper.rb",
      "templates/octave.m.erb"
@@ -45,7 +46,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Ruby driver for httperf - automated load and performance testing}
   s.test_files = [
-    "spec/httperf_result_parser_spec.rb",
+    "spec/arg_parser_spec.rb",
+     "spec/httperf_result_parser_spec.rb",
      "spec/spec_helper.rb"
   ]
 
