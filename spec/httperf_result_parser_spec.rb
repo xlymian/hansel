@@ -49,68 +49,68 @@ describe Hansel::HttperfResultParser, "#score" do
       @httperf_result.class.name =~ /HttperfResult/
     end
 
-    describe "the HttperfResult object" do
-      it "initialize the rate should be 10" do
+    describe "the HttperfResult object should initialize the" do
+      it "rate to 10" do
         @httperf_result.rate.should == 10
       end
 
-      it "initialize the server to 'www.example.com'" do
+      it "server to 'www.example.com'" do
         @httperf_result.server.should == 'www.example.com'
       end
 
-      it "initialize the port to 80" do
+      it "port to 80" do
         @httperf_result.port.should == 80
       end
 
-      it "initialize the uri to '/'" do
+      it "uri to '/'" do
         @httperf_result.uri.should == '/'
       end
 
-      it "initialize the num_conns to 100" do
+      it "num_conns to 100" do
         @httperf_result.num_conns.should == 100
       end
 
-      it "the should be replies to 98" do
+      it "replies to 98" do
         @httperf_result.replies.should == 98
       end
 
-      it "the connection_rate should be 9.9" do
+      it "connection_rate to 9.9" do
         @httperf_result.connection_rate.should == 9.9
       end
 
-      it "the request_rate should be 9.9" do
+      it "request_rate should to 9.9" do
         @httperf_result.request_rate.should == 9.9
       end
 
-      it "should set the reply_time to 90.1" do
+      it "reply_time to 90.1" do
         @httperf_result.reply_time.should == 90.1
       end
 
-      it "the net_io should be 7.7" do
+      it "net_io to 7.7" do
         @httperf_result.net_io.should == 7.7
       end
 
-      it "the errors should be 0" do
+      it "errors to 0" do
         @httperf_result.errors.should == 0
       end
 
-      it "the status should be 1" do
+      it "status to 1" do
         @httperf_result.status.should == 1
       end
 
-      it "reply_rate_min should be 9.8" do
+      it "reply_rate_min to 9.8" do
         @httperf_result.reply_rate_min.should == 9.8
       end
 
-      it "the reply_rate_avg should be 9.9" do
+      it "the reply_rate_avg to 9.9" do
         @httperf_result.reply_rate_avg.should == 9.9
       end
 
-      it "the reply_rate_max should be 10.0" do
+      it "the reply_rate_max to 10.0" do
         @httperf_result.reply_rate_max.should == 10.0
       end
 
-      it "the reply_rate_stddev should be 0.1" do
+      it "the reply_rate_stddev to 0.1" do
         @httperf_result.reply_rate_stddev.should == 0.1
       end
     end

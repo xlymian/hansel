@@ -30,6 +30,18 @@ module Hansel
       )
     end
 
+    #
+    # Uses OptionParser to return an OpenStruct object describing the options.
+    #
+    def parse
+      # The options specified on the command line will be collected in *options*.
+      # We set default values here.
+      OptionParser.new { |options| parse_options options}.parse!(@args)
+      @options
+    end
+
+  private
+
     def server_options options
       options.on("-s", "--server=S",
           "Specifies the IP hostname of the server.") do |server|
@@ -38,7 +50,7 @@ module Hansel
 
       options.on("-p", "--port=N",
           "Specifies the port number on which the server is listening.") do |port|
-        @options.port = port
+        @options.port = port.to_i
       end
 
       options.on("-u", "--uri=S",
@@ -50,22 +62,22 @@ module Hansel
     def httperf_options options
       options.on("-n", "--num_conns=N",
           "Specifies the total number of connections to create.") do |num_conns|
-        @options.num_conns = num_conns
+        @options.num_conns = num_conns.to_i
       end
 
       options.on("-l", "--low_rate=S",
           "Specifies the starting fixed rate at which connections are created.") do |low_rate|
-        @options.low_rate = low_rate
+        @options.low_rate = low_rate.to_i
       end
 
       options.on("-l", "--high_rate=S",
           "Specifies the ending fixed rate at which connections are created.") do |high_rate|
-        @options.high_rate = high_rate
+        @options.high_rate = high_rate.to_i
       end
 
       options.on("-l", "--rate_step=S",
           "Specifies the fixed rate step at which connections are created.") do |rate_step|
-        @options.rate_step = rate_step
+        @options.rate_step = rate_step.to_i
       end
     end
 
@@ -76,7 +88,7 @@ module Hansel
       end
 
       options.on("-o", "--output=FILE", "Specify an output file.") do |output|
-        @options.output = output
+        @options.output = !!output
       end
 
       options.on("-d", "--output_dir=PATH",
@@ -125,16 +137,6 @@ module Hansel
           other_options version).map(&:to_sym).each do |method|
           self.send method, options
       end
-    end
-
-    #
-    # Uses OptionParser to return an OpenStruct object describing the options.
-    #
-    def parse
-      # The options specified on the command line will be collected in *options*.
-      # We set default values here.
-      OptionParser.new { |options| parse_options options}.parse!(@args)
-      @options
     end
 
   end
