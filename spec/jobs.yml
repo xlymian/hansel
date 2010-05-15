@@ -1,0 +1,8 @@
+--- 
+- :server: localhost
+  :uri: /
+  :format: octave
+  :num_conns: 1
+  :low_rate: 1
+  :high_rate: 5
+  :rate_step: 1

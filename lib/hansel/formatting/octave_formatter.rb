@@ -1,6 +1,6 @@
 require 'erb'
 
-module Hansel
+module HanselCore
   #
   # Output to a Octave script.
   #

@@ -1,57 +1,114 @@
 require File.dirname(__FILE__) + "/spec_helper"
-require 'arg_parser'
 
-describe Hansel::ArgParser, "#parse" do
+describe HanselCore::ArgParser, "#parse" do
   before :each do
-    @argv = [
-      '--server=frunobulax.local',
-      '--port=4000',
-      '--uri=/',
-      '--num_conns=1',
-      '--low_rate=1',
-      '--high_rate=5',
-      '--rate_step=1',
-      '--format=octave',
-      '--output=true'
-      ]
-    @options = Hansel::ArgParser.new(@argv).parse
   end
 
-  describe "should set the" do
-    it "server to 'frunobulax.local'" do
-      @options.server.should == 'frunobulax.local'
+  describe "when the option" do
+    describe "master is set to 'localhost:4000'" do
+      it "should set master" do
+        @argv = [ '--master=localhost:4000' ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.master.should == 'localhost:4000'
+      end
+
+      it "should set master" do
+        @argv = [ '-mlocalhost:4000' ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.master.should == 'localhost:4000'
+      end
     end
 
-    it "port to 4000" do
-      @options.port.should == 4000
+    describe "dir is set to '/tmp/hansel_output'" do
+      it "should set output_dir" do
+        @argv = [ '--dir=/tmp/hansel_output' ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.output_dir.should == '/tmp/hansel_output'
+      end
+
+      it "should set output_dir" do
+        @argv = [ '-d/tmp/hansel_output' ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.output_dir.should == '/tmp/hansel_output'
+      end
+
+      it "should set template" do
+        @argv = [ '--template=/home/templates' ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.template.should == '/home/templates'
+      end
+
+      it "should set template" do
+        @argv = [ '-t/home/templates' ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.template.should == '/home/templates'
+      end
     end
 
-    it "uri to '/" do
-      @options.uri.should == '/'
+    %w(yaml csv octave).each do |format|
+      describe "output --format is set to #{format}" do
+        it "should set format #{format}" do
+          @argv = [ "--format=#{format}" ]
+          @options = HanselCore::ArgParser.new(@argv).parse
+          @options.format.should == format
+        end
+
+        it "should set format to #{format}" do
+          @argv = [ "-f#{format}" ]
+          @options = HanselCore::ArgParser.new(@argv).parse
+          @options.format.should == format
+        end
+      end
     end
 
-    it "num_conns to 1" do
-      @options.num_conns.should == 1
+    describe "verbose is set" do
+      it "should set verbose to true" do
+        @argv = [ '--verbose' ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.verbose.should == true
+      end
+      it "should set verbose to true" do
+        @argv = [ '-v' ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.verbose.should == true
+      end
     end
 
-    it "low_rate to 1" do
-      @options.low_rate.should == 1
+    describe "no-verbose is set" do
+      it "should set verbose to false" do
+        @argv = [ '--verbose', '--no-verbose' ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.verbose.should == false
+      end
     end
 
-    it  "high_rate to 5" do
-      @options.high_rate.should == 5
+    describe "verbose is not set" do
+      it "verbose defaults to false" do
+        @argv = [ ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.verbose.should == false
+      end
     end
 
-    it "rate_step to 1" do
-      @options.rate_step.should == 1
+    describe "help is set" do
+      it "should set exit to true" do
+        @argv = [ '--help' ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.exit.should == true
+      end
+      it "should set exit to true" do
+        @argv = [ '-h' ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.exit.should == true
+      end
     end
 
-    it "output_format to 'octave'" do
-      @options.output_format.should == :octave
-    end
-
-    it "output to 'true'" do
-      @options.output.should == true
+    describe "version is set" do
+      it "should set exit to true" do
+        @argv = [ '--version' ]
+        @options = HanselCore::ArgParser.new(@argv).parse
+        @options.exit.should == true
+      end
     end
   end
 end

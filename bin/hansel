@@ -10,10 +10,7 @@ class File
   end
 end
 
-require File.here '/../lib/arg_parser'
-require File.here '/../lib/config'
 require File.here '/../lib/hansel'
-
-options = Hansel::Config.new(ARGV).options
+options = HanselCore::ArgParser.new( ARGV ).parse
 exit if options.exit
-Hansel::Hansel.new(options).run
+HanselCore::Hansel.new( options ).load_job_queue.run

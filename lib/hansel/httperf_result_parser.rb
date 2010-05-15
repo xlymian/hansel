@@ -1,4 +1,4 @@
-module Hansel
+module HanselCore
   #
   # Parse httperf output.
   #

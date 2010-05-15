@@ -1,4 +1,4 @@
-module Hansel
+module HanselCore
   #
   # Wrapper for parsing of the httperf run result.
   #

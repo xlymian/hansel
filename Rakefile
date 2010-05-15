@@ -1,6 +1,11 @@
 require 'rubygems'
 require 'rake'
-require "spec/rake/spectask"
+
+begin
+  require "spec/rake/spectask"
+rescue LoadError
+  puts "rspec (or a dependency) not available. Install it with: gem install rspec"
+end
 
 task :default => :spec
 
@@ -19,11 +24,14 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name        = "hansel"
+    gem.executables = "hansel"
     gem.summary     = %Q{Ruby driver for httperf - automated load and performance testing}
     gem.description = %Q{Ruby driver for httperf - automated load and performance testing}
     gem.email       = "paul.mylchreest@mac.com"
     gem.homepage    = "http://github.com/xlymian/hansel"
     gem.authors     = ["Paul Mylchreest"]
+    gem.add_dependency('rspec')
+    gem.add_dependency 'typhoeus'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new

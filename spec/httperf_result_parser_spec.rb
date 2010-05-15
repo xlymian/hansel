@@ -28,14 +28,14 @@ Errors: total 0 client-timo 0 socket-timo 0 connrefused 0 connreset 0
 Errors: fd-unavail 0 addrunavail 0 ftab-full 0 other 0
 EOS
 
-describe Hansel::HttperfResultParser, "#score" do
+describe HanselCore::HttperfResultParser, "#score" do
   before(:each) do
-    @parser = Hansel::HttperfResultParser.new SAMPLE_HTTPERF_OUTPUT
+    @parser = HanselCore::HttperfResultParser.new SAMPLE_HTTPERF_OUTPUT
   end
 
   describe "when calling parse" do
     before(:each) do
-      @httperf_result = Hansel::HttperfResult.new(
+      @httperf_result = HanselCore::HttperfResult.new(
         :rate       => 10,
         :server     => 'www.example.com',
         :port       => 80,
