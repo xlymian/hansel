@@ -30,8 +30,13 @@ begin
     gem.email       = "paul.mylchreest@mac.com"
     gem.homepage    = "http://github.com/xlymian/hansel"
     gem.authors     = ["Paul Mylchreest"]
-    gem.add_dependency('rspec')
+
     gem.add_dependency 'typhoeus'
+
+    gem.add_development_dependency 'rspec'
+    gem.add_development_dependency 'gherkin'
+    gem.add_development_dependency 'cucumber'
+
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new

@@ -9,7 +9,7 @@ a job queue file, in a yaml format, run httperf with each job
 
   For Linux (Ubuntu):
 
-    apt-get update && apt-get -y install rubygems httperf
+    apt-get update && apt-get -y install rubygems httperf ruby1.8-dev libcurl4-gnutls-dev
 
   On MacOS X using homebrew:
 
@@ -27,24 +27,25 @@ a job queue file, in a yaml format, run httperf with each job
 
 Create a job queue file in ~/.hansel/jobs.yml:
 
-    ---
-    - :server: www.example.com
-      :uri: /
-      :num_conns: 50
-      :low_rate: 10
-      :high_rate: 50
-      :rate_step: 10
+---
+  - :server: www.example.com
+    :uri: /
+    :num_conns: 50
+    :low_rate: 10
+    :high_rate: 50
+    :rate_step: 10
 
-    - :server: www.apple.com
-      :uri: /
-      :num_conns: 50
-      :low_rate: 10
-      :high_rate: 50
-      :rate_step: 10
+  - :server: www.apple.com
+    :uri: /
+    :num_conns: 50
+    :low_rate: 10
+    :high_rate: 50
+    :rate_step: 10
 
 and run Hansel
 
-      hansel --verbose --format=octave
+    export PATH=$PATH:/var/lib/gems/1.8/bin
+    hansel --verbose --format=octave
 
 By default, the output is written into the ~/hansel_output directory. When the octave format is
 specified, it uses the default template octave.m.erb in the project templates. Here is a sample
