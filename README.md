@@ -10,6 +10,8 @@ a job queue file, in a yaml format, run httperf with each job
   For Linux (Ubuntu):
 
     apt-get update && apt-get -y install rubygems httperf ruby1.8-dev libcurl4-gnutls-dev
+    gem install rubygems-update
+    update_rubygems
 
   On MacOS X using homebrew:
 

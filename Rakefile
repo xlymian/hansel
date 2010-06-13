@@ -64,8 +64,7 @@ MetricFu::Configuration.run do |config|
   config.churn    = { :start_date => "1 year ago", :minimum_churn_count => 10}
 
   config.rcov     = { :environment => 'test',
-                      :test_files => ['test/**/*_test.rb', 
-                                      'spec/**/*_spec.rb'],
+                      :test_files => ['spec/**/*_spec.rb'],
                       :rcov_opts => ["--sort coverage", 
                                      "--no-html", 
                                      "--text-coverage",
