@@ -1,21 +1,18 @@
 module HanselCore
   module Formatting
     def yaml_formatter
-      load 'lib/hansel/formatting/yaml_formatter.rb'
       File.open(output_filename, "w+") do |file|
         file.puts YamlFormatter.format results
       end
     end
 
     def csv_formatter
-      load 'lib/hansel/formatting/csv_formatter.rb'
       File.open(output_filename, "w+") do |file|
         file.puts CsvFormatter.format results
       end
     end
 
     def octave_formatter
-      load 'lib/hansel/formatting/octave_formatter.rb'
       num_conns = results.first.num_conns rescue nil
       file_name = output_filename{ "-#{num_conns.to_s}" }
       File.open(file_name, "w+") do |file|
