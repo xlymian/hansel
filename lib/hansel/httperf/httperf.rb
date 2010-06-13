@@ -1,6 +1,7 @@
 module HanselCore
   module Httperf
     def build_httperf_cmd
+      cookie = @current_job.cookie
       httperf_cmd = [
         "httperf --hog",
         "--server=#{@current_job.server}",
@@ -8,7 +9,7 @@ module HanselCore
         "--uri=#{@current_job.uri}",
         "--num-conns=#{@current_job.num_conns}",
         "--rate=#{@current_rate}",
-        @current_job.cookie && "--add-header='Cookie: #{@current_job.cookie}\\n'"
+        cookie && "--add-header='Cookie: #{cookie}\\n'"
       ].compact.join ' '
     end
 
@@ -29,7 +30,6 @@ module HanselCore
           }))
         HttperfResultParser.new(pipe).parse(httperf_result)
       end
-      self
     end
 
   end

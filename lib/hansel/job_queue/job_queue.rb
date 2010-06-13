@@ -5,7 +5,6 @@ module HanselCore
     end
 
     def push_job job
-      job.port = 80 unless job.port
       @jobs.push job
     end
 
@@ -13,11 +12,9 @@ module HanselCore
       @jobs.pop
     end
 
-    #
-    # Load jobs from queue
-    #
     def load_job_queue
       (YAML.load_file File.join(config_path, 'jobs.yml')).map do |job|
+        job.merge!({:port => 80}) unless job[:port]
         self.push_job(OpenStruct.new job)
       end
       self

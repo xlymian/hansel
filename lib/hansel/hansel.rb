@@ -36,10 +36,12 @@ module HanselCore
     # Output the results based on the requested output format
     #
     def output
-      if options.format
-        FileUtils.mkdir_p options.output_dir
+      opts = options
+      if opts.format
+        FileUtils.mkdir_p opts.output_dir
         formatted_output
       end
+      @results.clear
     end
 
     def status text
@@ -50,18 +52,14 @@ module HanselCore
     # Run httperf from low_rate to high_rate, stepping by rate_step
     #
     def run
-      status "starting run..."
       while @jobs.length > 0 do
         @current_job = @jobs.pop
         (@current_job.low_rate.to_i..@current_job.high_rate.to_i).step(@current_job.rate_step.to_i) do |rate|
-          status "running httperf at rate: #{rate}"
           @current_rate = rate
           httperf
         end
         output
-        @results.clear
       end
-      status "ending run..."
     end
 
     def run_server
