@@ -20,7 +20,7 @@ module HanselCore
           {
             :output_file_name => file_name,
             :template         => options.template ||
-                                  File.join( [ options.template_path, 'octave.m.erb' ] ),
+                                  File.join( [ File.dirname(__FILE__), '../../..', options.template_path, 'octave.m.erb' ] ),
           }
         ).format
       end
