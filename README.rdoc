@@ -1,16 +1,17 @@
-# hansel
+= hansel
 
 Hansel is a pure ruby driver for httperf for automated load and performance testing. It will load 
 a job queue file, in a yaml format, run httperf with each job
 
-# Installing Httperf and Hansel
+= Installing Httperf and Hansel
 
-## Httperf
+== Httperf
 
   For Linux (Ubuntu):
 
     apt-get update && apt-get -y install rubygems httperf ruby1.8-dev libcurl4-gnutls-dev
     gem install rubygems-update
+    export PATH=$PATH:/var/lib/gems/1.8/bin
     update_rubygems
 
   On MacOS X using homebrew:
@@ -18,14 +19,14 @@ a job queue file, in a yaml format, run httperf with each job
     brew install httperf
 
   finally:
-  
+
     gem install hansel
 
-## Optional -- Installing Octave using macports (warning: long!)
+== Optional -- Installing Octave using macports (warning: long!)
 
     sudo port install octave
 
-# Example usage
+= Example usage
 
 Create a job queue file in ~/.hansel/jobs.yml:
 
@@ -46,7 +47,6 @@ Create a job queue file in ~/.hansel/jobs.yml:
 
 and run Hansel
 
-    export PATH=$PATH:/var/lib/gems/1.8/bin
     hansel --verbose --format=octave
 
 By default, the output is written into the ~/hansel_output directory. When the octave format is
@@ -86,7 +86,7 @@ output from the previous job:
     
 Run octave on it will produce graph as a png file.
 
-## Note on Patches/Pull Requests
+== Note on Patches/Pull Requests
  
 * Fork the project.
 * Make your feature addition or bug fix.
@@ -96,11 +96,11 @@ Run octave on it will produce graph as a png file.
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
-## References
+== References
 
 "HTTP Perforance Testing with httperf":http://agiletesting.blogspot.com/2005/04/http-performance-testing-with-httperf.html
 "Perforance vs Load Testing":http://agiletesting.blogspot.com/2005/04/more-on-performance-vs-load-testing.html
 
-## Copyright
+== Copyright
 
 Copyright (c) 2010 Paul Mylchreest. See LICENSE for details.
