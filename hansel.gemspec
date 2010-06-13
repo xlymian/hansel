@@ -5,38 +5,43 @@
 
 Gem::Specification.new do |s|
   s.name = %q{hansel}
-  s.version = "0.1.7"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Mylchreest"]
-  s.date = %q{2010-05-08}
+  s.date = %q{2010-06-13}
   s.default_executable = %q{hansel}
   s.description = %q{Ruby driver for httperf - automated load and performance testing}
   s.email = %q{paul.mylchreest@mac.com}
   s.executables = ["hansel"]
   s.extra_rdoc_files = [
     "LICENSE",
-     "README.rdoc"
+     "README.md"
   ]
   s.files = [
     ".document",
      ".gitignore",
      "LICENSE",
-     "README.rdoc",
+     "README.md",
      "Rakefile",
      "VERSION",
      "bin/hansel",
      "hansel.gemspec",
-     "lib/arg_parser.rb",
-     "lib/config.rb",
-     "lib/csv_formatter.rb",
      "lib/hansel.rb",
-     "lib/httperf_result.rb",
-     "lib/httperf_result_parser.rb",
-     "lib/octave_formatter.rb",
-     "lib/yaml_formatter.rb",
+     "lib/hansel/arg_parser.rb",
+     "lib/hansel/formatting/csv_formatter.rb",
+     "lib/hansel/formatting/formatting.rb",
+     "lib/hansel/formatting/octave_formatter.rb",
+     "lib/hansel/formatting/yaml_formatter.rb",
+     "lib/hansel/hansel.rb",
+     "lib/hansel/httperf/httperf.rb",
+     "lib/hansel/httperf_result.rb",
+     "lib/hansel/httperf_result_parser.rb",
+     "lib/hansel/job_queue/job_queue.rb",
      "spec/arg_parser_spec.rb",
+     "spec/hansel_spec.rb",
      "spec/httperf_result_parser_spec.rb",
+     "spec/jobs.yml",
      "spec/spec_helper.rb",
      "templates/octave.m.erb"
   ]
@@ -47,6 +52,7 @@ Gem::Specification.new do |s|
   s.summary = %q{Ruby driver for httperf - automated load and performance testing}
   s.test_files = [
     "spec/arg_parser_spec.rb",
+     "spec/hansel_spec.rb",
      "spec/httperf_result_parser_spec.rb",
      "spec/spec_helper.rb"
   ]
@@ -56,15 +62,15 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<rspec>, [">= 0"])
       s.add_runtime_dependency(%q<typhoeus>, [">= 0"])
-      s.add_runtime_dependency(%q<sinatra>, [">= 0"])
     else
+      s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<typhoeus>, [">= 0"])
-      s.add_dependency(%q<sinatra>, [">= 0"])
     end
   else
+    s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<typhoeus>, [">= 0"])
-    s.add_dependency(%q<sinatra>, [">= 0"])
   end
 end
 
