@@ -89,26 +89,5 @@ describe HanselCore::ArgParser, "#parse" do
         @options.verbose.should == false
       end
     end
-
-    describe "help is set" do
-      it "should set exit to true" do
-        @argv = [ '--help' ]
-        @options = HanselCore::ArgParser.new(@argv).parse
-        @options.exit.should == true
-      end
-      it "should set exit to true" do
-        @argv = [ '-h' ]
-        @options = HanselCore::ArgParser.new(@argv).parse
-        @options.exit.should == true
-      end
-    end
-
-    describe "version is set" do
-      it "should set exit to true" do
-        @argv = [ '--version' ]
-        @options = HanselCore::ArgParser.new(@argv).parse
-        @options.exit.should == true
-      end
-    end
   end
 end

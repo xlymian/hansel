@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module HanselCore
   #
   # Parse the command configuration file options and command line arguments.

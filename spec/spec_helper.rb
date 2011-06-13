@@ -1,10 +1,5 @@
-require "rubygems"
-require 'spec'
+require 'rubygems'
+require 'bundler'
 require 'lib/hansel'
 
-module Helpers
-end
-
-Spec::Runner.configure do |config|
-  config.include Helpers
-end
+Bundler.setup

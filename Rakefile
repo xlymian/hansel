@@ -1,48 +1,20 @@
-require 'rubygems'
-require 'rake'
-
 begin
-  require "spec/rake/spectask"
+  require 'bundler'
+  require 'rspec/core/rake_task'
+  require 'metric_fu'
+  Bundler.setup
 rescue LoadError
-  puts "rspec (or a dependency) not available. Install it with: gem install rspec"
+  puts '*** You must `gem install bundler` and `bundle install` to run rake tasks'
+end
+
+$LOAD_PATH.unshift 'lib'
+# require 'hansel/tasks'
+
+RSpec::Core::RakeTask.new do |t|
+  t.rspec_opts = [ "--color" ]
 end
 
 task :default => :spec
-
-Spec::Rake::SpecTask.new do |t|
-  t.spec_opts = %w(-fs -c)
-  t.spec_files = FileList["spec/**_spec.rb"]
-end
-
-begin
-  require 'metric_fu'
-rescue LoadError
-  puts "metric_fu (or a dependency) not available. Install it with: gem install metric_fu"
-end
-
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name        = "hansel"
-    gem.executables = "hansel"
-    gem.summary     = %Q{Ruby driver for httperf - automated load and performance testing}
-    gem.description = %Q{Ruby driver for httperf - automated load and performance testing}
-    gem.email       = "paul.mylchreest@mac.com"
-    gem.homepage    = "http://github.com/xlymian/hansel"
-    gem.authors     = ["Paul Mylchreest"]
-
-    gem.add_dependency 'typhoeus'
-
-    gem.add_development_dependency 'rspec'
-    gem.add_development_dependency 'gherkin'
-    gem.add_development_dependency 'cucumber'
-
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
-end
 
 MetricFu::Configuration.run do |config|
   #define which metrics you want to use
@@ -74,4 +46,16 @@ MetricFu::Configuration.run do |config|
                                      "--exclude /gems/,/Library/,spec"]}
 
   config.graph_engine = :bluff
+end
+
+desc "Push a new version to Gemcutter"
+task :publish do
+  require 'hansel/version'
+
+  sh "gem build hansel.gemspec"
+  sh "gem push hansel-#{HanselCore::Version}.gem"
+  sh "git tag v#{HanselCore::Version}"
+  sh "git push origin v#{HanselCore::Version}"
+  sh "git push origin master"
+  sh "git clean -fd"
 end
