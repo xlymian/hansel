@@ -70,7 +70,7 @@ module HanselCore
 
     def version options
       options.on_tail("--version", "Show version") do
-        puts "Hansel version #{IO.foreach('VERSION').first.strip}"
+        puts "Hansel version #{Version}"
         @options.exit = true
       end
     end
