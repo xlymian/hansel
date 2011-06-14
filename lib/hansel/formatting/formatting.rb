@@ -15,13 +15,20 @@ module HanselCore
     def octave_formatter
       res = results
       opts, num_conns = options, (res.first.num_conns rescue nil)
-      file_name = output_filename{ "-#{num_conns.to_s}" }
+      file_name = output_filename{ "#{num_conns.to_s}" }
       template = opts.template || File.join( [ File.dirname(__FILE__), '../../..', opts.template_path, 'octave.m.erb' ] )
+      description = @current_job && @current_job.description
       File.open(file_name, "w+") do |file|
         file.puts OctaveFormatter.new(res,
             { :output_file_name => file_name,
               :template         => template,
-              :png_file_name    => "#{@server}:#{@port}-#{num_conns.to_s}.png"
+              :description      => @description,
+              :png_file_name    => [[ @server, @port,
+                                      description,
+                                      num_conns.to_s
+                                    ].compact.join('-'), 
+                                    'png'
+                                   ].join('.')
             }).format
       end
     end
@@ -38,10 +45,11 @@ module HanselCore
     end
 
     def output_filename
-      opts, part = options, (block_given? ? yield : '')
-      type    = { :yaml => 'yml', :csv => 'csv', :octave => 'm' }[opts.format.to_sym]
+      part = [ @current_job && @current_job.description, ( yield if block_given? ) ].compact
+      type    = { :yaml => 'yml', :csv => 'csv', :octave => 'm' }[options.format.to_sym]
       @server, @port = (res = results.first) && res.server, res.port
-      [File.join([opts.output_dir, ("#{@server}:#{@port}" + part)]), type].join('.')
+      fname = [@server, @port, (part unless part.empty?)].compact.join('-')
+      [ File.join( [options.output_dir, fname] ), type ].join('.')
     end
   end
 end

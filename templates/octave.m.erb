@@ -24,7 +24,7 @@ plot(rate, errors, '-r*');
 grid on;
 
 axis([0 <%= @max_rate %> 0 <%= @max_rate %>]);
-title('Hansel report for <%= "#{@data.first.server}:#{@data.first.port}#{@data.first.uri} (#{@data.first.num_conns}" %> connections per run)')
+title('Hansel report for <%= "#{@data.first.server}:#{@data.first.port}#{@data.first.uri} #{@description} (#{@data.first.num_conns}" %> connections per run)')
 xlabel('Demanded Request Rate');
 legend('Request Rate', 'Connection Rate', 'Avg. reply rate', 'Max. reply rate', 'Reply rate StdDev', 'Reply time', 'Errors');
 print('<%= @png_output %>', '-dpng')

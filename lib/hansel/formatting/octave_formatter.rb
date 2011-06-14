@@ -6,11 +6,12 @@ module HanselCore
   #
   class OctaveFormatter
     def initialize(data, options = {})
-      @data       = data
-      @template   = options[:template]
-      @rates      = @data.map &:rate
-      @max_rate   = @rates.max
-      @png_output = options[:png_file_name]
+      @data         = data
+      @template     = options[:template]
+      @rates        = @data.map &:rate
+      @max_rate     = @rates.max
+      @png_output   = options[:png_file_name]
+      @description  = options[:description]
     end
 
     # For each value of rate, collate the values in each variable in @vars

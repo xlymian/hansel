@@ -12,9 +12,10 @@ Installing Httperf and Hansel
 For Linux (Ubuntu):
 
     apt-get update && apt-get -y install rubygems httperf ruby1.8-dev libcurl4-gnutls-dev
-    gem install rubygems-update
+    gem install rubygems-update -v 1.3.0
     export PATH=$PATH:/var/lib/gems/1.8/bin
     update_rubygems
+    gem update --system
     gem install hansel
 
 On MacOS X using homebrew:
@@ -43,6 +44,7 @@ Create a job queue file in ~/.hansel/jobs.yml:
         :low_rate: 10
         :high_rate: 50
         :rate_step: 10
+        :description: example
 
       - :server: www.apple.com
         :uri: /
@@ -50,6 +52,7 @@ Create a job queue file in ~/.hansel/jobs.yml:
         :low_rate: 10
         :high_rate: 50
         :rate_step: 10
+        :description: apple
 
 and run Hansel
 
@@ -59,14 +62,14 @@ By default, the output is written into the ~/hansel_output directory. When the o
 specified, it uses the default template octave.m.erb in the project templates. Here is a sample
 output from the previous job:
 
-    rate              = [5, 10, 15, 20];
-    request_rate      = [5.1, 9.3, 12.9, 15.8];
-    connection_rate   = [5.1, 9.3, 12.9, 15.8];
-    reply_rate_avg    = [0.0, 0.0, 0.0, 0.0];
-    reply_rate_max    = [0.0, 0.0, 0.0, 0.0];
-    reply_time        = [88.4, 93.4, 89.2, 89.1];
-    reply_rate_stddev = [0.0, 0.0, 0.0, 0.0];
-    errors            = [0, 0, 0, 0];
+    rate              = [10, 20, 30, 40, 50];
+    request_rate      = [8.8, 17.6, 18.9, 24.6, 19.3];
+    connection_rate   = [8.8, 17.6, 18.9, 24.6, 19.3];
+    reply_rate_avg    = [0.0, 0.0, 0.0, 0.0, 0.0];
+    reply_rate_max    = [0.0, 0.0, 0.0, 0.0, 0.0];
+    reply_time        = [62.7, 56.0, 55.8, 45.3, 118.0];
+    reply_rate_stddev = [0.0, 0.0, 0.0, 0.0, 0.0];
+    errors            = [0, 0, 0, 0, 0];
 
     plot(rate, request_rate, '-k*');
     hold on;
@@ -84,11 +87,11 @@ output from the previous job:
 
     grid on;
 
-    axis([0 20 0 20]);
-    title('Hansel report for www.example.com:80/ (10 connections per run)')
+    axis([0 50 0 50]);
+    title('Hansel report for www.apple.com:80/  (10 connections per run)')
     xlabel('Demanded Request Rate');
     legend('Request Rate', 'Connection Rate', 'Avg. reply rate', 'Max. reply rate', 'Reply rate StdDev', 'Reply time', 'Errors');
-    print('/Users/paulm/hansel_output/hansel-10.m.png', '-dpng')
+    print('www.apple.com-80-osx-10.png', '-dpng')
 
 Run octave on it will produce graph as a png file.
 
