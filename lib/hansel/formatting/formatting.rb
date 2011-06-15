@@ -23,12 +23,7 @@ module HanselCore
             { :output_file_name => file_name,
               :template         => template,
               :description      => @description,
-              :png_file_name    => [[ @server, @port,
-                                      description,
-                                      num_conns.to_s
-                                    ].compact.join('-'), 
-                                    'png'
-                                   ].join('.')
+              :png_file_name    => [ @server, @port, description, num_conns.to_s ].compact.join('-')
             }).format
       end
     end

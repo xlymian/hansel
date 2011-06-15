@@ -116,4 +116,3 @@ describe HanselCore::HttperfResultParser, "#score" do
     end
   end
 end
-

@@ -19,6 +19,10 @@ module HanselCore
     #
     def httperf
       httperf_cmd = build_httperf_cmd
+      # Do a pre-flight run to setup any resources
+      status "\n#{httperf_cmd} (warm up run)"
+      IO.popen("#{httperf_cmd} 2>&1")
+
       IO.popen("#{httperf_cmd} 2>&1") do |pipe|
         status "\n#{httperf_cmd}"
         @results << (httperf_result = HttperfResult.new({

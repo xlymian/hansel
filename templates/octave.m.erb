@@ -27,4 +27,14 @@ axis([0 <%= @max_rate %> 0 <%= @max_rate %>]);
 title('Hansel report for <%= "#{@data.first.server}:#{@data.first.port}#{@data.first.uri} #{@description} (#{@data.first.num_conns}" %> connections per run)')
 xlabel('Demanded Request Rate');
 legend('Request Rate', 'Connection Rate', 'Avg. reply rate', 'Max. reply rate', 'Reply rate StdDev', 'Reply time', 'Errors');
-print('<%= @png_output %>', '-dpng')
+print('<%= @png_output %>.png', '-dpng')
+
+hold off;
+plot(rate, reply_time, '-k*');
+hold on;
+grid on;
+axis([0 <%= @max_rate %> <%= @data.map(&:reply_time).min - 10 %> <%= @data.map(&:reply_time).max + 10 %>]);
+title('Hansel reply-time report for <%= "#{@data.first.server}:#{@data.first.port}#{@data.first.uri} #{@description} (#{@data.first.num_conns}" %> connections per run)')
+xlabel('Demanded Request Rate');
+ylabel('Reply time');
+print('<%= @png_output %>_reply_time.png', '-dpng')

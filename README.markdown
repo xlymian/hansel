@@ -7,7 +7,7 @@ a job queue file, in a yaml format, run httperf with each job
 Installing Httperf and Hansel
 -----------------------------
 
-## Httperf
+# Httperf
 
 For Linux (Ubuntu):
 
@@ -18,17 +18,27 @@ For Linux (Ubuntu):
     gem update --system
     gem install hansel
 
+note: tested with EC2 ami-1b729472
+
 On MacOS X using homebrew:
 
     brew install httperf
     gem install hansel
 
 
-## Optional -- Installing Octave (warning: long!)
+# Octave (optional)
+
+## Downloading the pre-build binary
+
+    http://octave.sourceforge.net/
+
+## Building Octave (warning: long!)
+
+(note: using homebrew seems broken at the moment)
 
     brew install gfortran octave
 
-or with MacPorts:
+or with MacPorts (broken at the moment):
 
     sudo port install octave
 
