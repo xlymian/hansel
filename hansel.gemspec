@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.files            += Dir.glob("tasks/**/*")
   s.executables       = [ "hansel" ]
 
-  s.extra_rdoc_files  = [ "LICENSE", "README.markdown" ]
   s.rdoc_options      = ["--charset=UTF-8"]
 
   s.description = <<-DESCRIPTION
