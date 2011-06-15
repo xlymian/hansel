@@ -15,5 +15,10 @@ module HanselCore
       @uri        = opt[:uri]
       @num_conns  = opt[:num_conns]
     end
+
+    def post_deserialize
+      puts "** I'm awake!"
+    end
+
   end
 end

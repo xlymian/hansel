@@ -16,7 +16,13 @@ module HanselCore
       res = results
       opts, num_conns = options, (res.first.num_conns rescue nil)
       file_name = output_filename{ "#{num_conns.to_s}" }
-      template = opts.template || File.join( [ File.dirname(__FILE__), '../../..', opts.template_path, 'octave.m.erb' ] )
+
+      template_name = (opts.template && opts.template + '.m.erb') || 'octave.m.erb'
+      template = File.join( [ File.dirname(__FILE__),
+                              '../../..',
+                              opts.template_path,
+                              template_name ] )
+
       description = @current_job && @current_job.description
       File.open(file_name, "w+") do |file|
         file.puts OctaveFormatter.new(res,
