@@ -8,7 +8,7 @@ rescue LoadError
 end
 
 $LOAD_PATH.unshift 'lib'
-# require 'hansel/tasks'
+load 'tasks/octave.rake'
 
 RSpec::Core::RakeTask.new do |t|
   t.rspec_opts = [ "--color" ]
