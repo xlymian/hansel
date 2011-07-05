@@ -1,3 +1,3 @@
 module HanselCore
-  Version = VERSION = '0.2.15'
+  Version = VERSION = '0.2.16'
 end
