@@ -28,10 +28,10 @@ namespace :hansel do
       end
     end
 
-    # rake hansel:octave:run[input_dir]
-    desc "Run octave on all *.m files in the specified directory"
-    task :run, :input_dir do |t, args|
-      %x[ cd #{args.input_dir} && octave *.m ]
+    # rake hansel:octave:run[input_dir,input_file]
+    desc "Run octave on the specified file"
+    task :run, :input_dir, :input_file do |t, args|
+      %x[ cd #{args.input_dir} && octave #{args.input_file} ]
     end
   end
 end

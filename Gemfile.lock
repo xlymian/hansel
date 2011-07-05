@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hansel (0.2.16)
+    hansel (0.2.18)
 
 GEM
   remote: http://rubygems.org/

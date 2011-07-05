@@ -3,6 +3,9 @@ module HanselCore
     def yaml_formatter
       File.open(output_filename, "w+") do |file|
         file.puts YamlFormatter.format results
+        # file.puts YamlFormatter.format results.merge({
+        #   :description => @current_job.description
+        # })
       end
     end
 

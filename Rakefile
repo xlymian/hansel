@@ -8,7 +8,6 @@ rescue LoadError
 end
 
 $LOAD_PATH.unshift 'lib'
-load 'tasks/octave.rake'
 
 RSpec::Core::RakeTask.new do |t|
   t.rspec_opts = [ "--color" ]
