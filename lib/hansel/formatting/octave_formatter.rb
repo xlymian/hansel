@@ -10,7 +10,7 @@ module HanselCore
       @template     = options[:template]
       @rates        = @data.map &:rate
       @max_rate     = @rates.max
-      @png_output   = options[:png_file_name]
+      @png_output   = options[:png_file_name].gsub( '.', '-') # make latex happy
       @description  = options[:description]
     end
 

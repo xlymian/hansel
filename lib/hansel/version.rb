@@ -1,3 +1,3 @@
 module HanselCore
-  Version = VERSION = '0.2.18' unless defined? HanselCore::VERSION
+  Version = VERSION = '0.2.19' unless defined? HanselCore::VERSION
 end
