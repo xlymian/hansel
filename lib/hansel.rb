@@ -4,6 +4,7 @@ require 'yaml'
 $:.unshift File.dirname(__FILE__) + "/../lib/hansel"
 
 require 'arg_parser'
+require 'version'
 require 'formatting/formatting'
 require 'formatting/yaml_formatter.rb'
 require 'formatting/csv_formatter.rb'
