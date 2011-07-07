@@ -32,7 +32,7 @@ module HanselCore
             { :output_file_name => file_name,
               :template         => template,
               :description      => @description,
-              :png_file_name    => [ @server, @port, description, num_conns.to_s ].compact.join('-')
+              :png_file_name    => [ @server.gsub('.', '_'), @port, description, num_conns.to_s ].compact.join('_')
             }).format
       end
     end
@@ -51,8 +51,8 @@ module HanselCore
     def output_filename
       part = [ @current_job && @current_job.description, ( yield if block_given? ) ].compact
       type    = { :yaml => 'yml', :csv => 'csv', :octave => 'm' }[options.format.to_sym]
-      @server, @port = (res = results.first) && res.server, res.port
-      fname = [@server, @port, (part unless part.empty?)].compact.join('-')
+      @server, @port, @num_conns = (res = results.first) && res.server, res.port, res.num_conns
+      fname = [ @server.gsub('.', '_'), @port, (part unless part.empty?), @num_conns ].compact.join('_')
       [ File.join( [options.output_dir, fname] ), type ].join('.')
     end
   end

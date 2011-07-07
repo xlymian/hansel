@@ -9,11 +9,11 @@ namespace :hansel do
       desc "Generate octave plot for a file"
       data = YAML.load_file( args.input_file ).collect{ |o| OpenStruct.new o.ivars }
       template = File.join( [ File.dirname(__FILE__),
-                              '../../templates',
+                              '../../../templates',
                               'multiplot.m.erb' ] )
       first = data.first
       output_dir = args.output_dir
-      output_name = args.input_file.split('/').last.gsub( '.', '-') + '.m'
+      output_name = args.input_file.split('/').last.gsub( '.', '_') + '.m'
       output_file = File.join([ output_dir, output_name ])
       File.open( output_file, 'w+' ) do |output|
         output.puts HanselCore::OctaveFormatter.new(data,
@@ -21,9 +21,10 @@ namespace :hansel do
               :template         => template,
               :description      => first.description,
               :png_file_name    => [  first.server,
+                                      first.port,
                                       first.description,
                                       first.num_conns.to_s
-                                   ].compact.join('-')
+                                   ].compact.join('_')
             }).format
       end
     end

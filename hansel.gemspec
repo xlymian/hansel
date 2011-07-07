@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.files            += Dir.glob("lib/**/*")
   s.files            += Dir.glob("spec/**/*")
   s.files            += Dir.glob("templates/**/*")
-  s.files            += Dir.glob("tasks/**/*")
+  s.files            += Dir.glob("lib/tasks/**/*")
   s.executables       = [ "hansel" ]
 
   s.rdoc_options      = ["--charset=UTF-8"]

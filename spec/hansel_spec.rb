@@ -82,7 +82,7 @@ describe HanselCore, "in general" do
 
     describe "calling output" do
       before :each do
-        @default_name = File.join [ @hansel.options.output_dir, 'localhost-80.yml' ]
+        @default_name = File.join [ @hansel.options.output_dir, 'localhost_80_1.yml' ]
         FileUtils.rm @default_name if File.exists? @default_name
         @hansel.output
       end

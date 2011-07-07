@@ -8,28 +8,21 @@ reply_rate_stddev = [<%= @data.map(&:reply_rate_stddev).join(', ') %>];
 errors            = [<%= @data.map(&:errors).join(', ') %>];
 
 <% pages = [
-    [
-      { :ylabel => 'Request Rate',    :yvar   => 'request_rate' },
-      { :ylabel => 'Connection Rate', :yvar   => 'connection_rate' },
-      { :ylabel => 'Reply time',      :yvar   => 'reply_time' },
-    ],
-    [
-      { :ylabel => 'Avg. reply rate',   :yvar   => 'reply_rate_avg' },
-      { :ylabel => 'Max. reply rate',   :yvar   => 'reply_rate_max' },
-      { :ylabel => 'Reply rate StdDev', :yvar   => 'reply_rate_stddev' },
-      { :ylabel => 'Errors',            :yvar   => 'errors' },
-    ]
+    { :ylabel => 'Request Rate',      :yvar   => 'request_rate'       },
+    { :ylabel => 'Connection Rate',   :yvar   => 'connection_rate'    },
+    { :ylabel => 'Reply time',        :yvar   => 'reply_time'         },
+    { :ylabel => 'Avg. reply rate',   :yvar   => 'reply_rate_avg'     },
+    { :ylabel => 'Max. reply rate',   :yvar   => 'reply_rate_max'     },
+    { :ylabel => 'Reply rate StdDev', :yvar   => 'reply_rate_stddev'  },
+    { :ylabel => 'Errors',            :yvar   => 'errors'             }
   ]
 %>
 
-<% pages.each_with_index do |page, page_num| %>
-  <% page.each_with_index do |plot, i| %>
-    title('<%= plot[:ylabel] %>')
-    subplot (2, 2, <%= i + 1 %>)
-    plot(rate, <%= plot[:yvar] %>, '-k*');
+<% pages.each do |page| %>
+    title('<%= page[:ylabel] %>')
+    plot(rate, <%= page[:yvar] %>, '-k*');
     xlabel('Demanded Request Rate');
-    ylabel('<%= plot[:ylabel] %>');
+    ylabel('<%= page[:ylabel] %>');
     grid on;
-  <% end %>
-  print('<%= "#{@png_output}-#{page_num + 1}" %>.png', '-dpng')
+    print('<%= "#{@png_output}-#{page[:yvar]}" %>.png', '-dpng')
 <% end %>
